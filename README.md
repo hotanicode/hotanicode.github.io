@@ -1,49 +1,79 @@
-# my-portfolio
+# Michael Kiarie — Portfolio
 
-This template should help get you started developing with Vue 3 in Vite.
+A single-page developer portfolio built with Vue 3, Vite and Tailwind CSS v4.
+Smooth scrolling is handled by Lenis, scroll-triggered reveals by GSAP
+ScrollTrigger, and the hero backdrop is a lightweight Three.js particle field
+that is lazy-loaded and pauses itself when off-screen.
 
-## Recommended IDE Setup
+## Highlights
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Dark/light theme** persisted to `localStorage` and applied before first
+  paint, so the saved theme never flashes.
+- **Reduced-motion aware** — every animation, the smooth scroller and the WebGL
+  background back off when `prefers-reduced-motion: reduce` is set.
+- **Graceful image fallbacks** — project and app cards render a generated
+  gradient cover until a real screenshot is dropped into `public/images/`.
+- **Content lives in data files**, not in templates, so updating the site is a
+  one-file change.
 
-## Recommended Browser Setup
+## Project structure
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+```
+src/
+  components/
+    sections/   Page sections (header, hero, about, skills, ..., footer)
+    ui/         Reusable pieces (buttons, cards, icons, meters, pills)
+  composables/  Lenis scrolling, GSAP reveals, Three.js field, section spy
+  css/main.css  Tailwind v4 theme tokens, base styles and custom utilities
+  data/         Profile, skills, experience, projects and apps content
+  router/       Routes and scroll behaviour
+  stores/       Pinia UI store (theme + mobile menu)
+  views/        HomeView and NotFoundView
+public/
+  images/       Project and app screenshots (optional)
+  resume/       Downloadable resume PDF
+```
 
-## Customize configuration
+## Editing the content
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+| What                                  | Where                    |
+| ------------------------------------- | ------------------------ |
+| Name, headline, contact, socials, nav | `src/data/profile.js`    |
+| Skill groups and the tech marquee     | `src/data/skills.js`     |
+| Work history and education            | `src/data/experience.js` |
+| Project case studies and filters      | `src/data/projects.js`   |
+| Side projects / apps                  | `src/data/apps.js`       |
+| Colours, fonts, animations            | `src/css/main.css`       |
 
-## Project Setup
+Screenshots are optional: name the file to match the `image` path in the data
+file and drop it into `public/images/projects/` or `public/images/apps/`.
+
+## Project setup
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Compile and hot-reload for development
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Compile and minify for production
 
 ```sh
 npm run build
+npm run preview
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+### Run unit tests with [Vitest](https://vitest.dev/)
 
 ```sh
 npm run test:unit
 ```
 
-### Run End-to-End Tests with [Playwright](https://playwright.dev)
+### Run end-to-end tests with [Playwright](https://playwright.dev)
 
 ```sh
 # Install browsers for the first run
@@ -56,14 +86,21 @@ npm run build
 npm run test:e2e
 # Runs the tests only on Chromium
 npm run test:e2e -- --project=chromium
-# Runs the tests of a specific file
-npm run test:e2e -- tests/example.spec.ts
+# Watch the browser while the tests run
+HEADED=1 npm run test:e2e -- --project=chromium
 # Runs the tests in debug mode
 npm run test:e2e -- --debug
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### Lint and format
 
 ```sh
 npm run lint
+npm run format
 ```
+
+## Recommended IDE setup
+
+[VS Code](https://code.visualstudio.com/) +
+[Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+(and disable Vetur), or WebStorm with the Vue plugin enabled.

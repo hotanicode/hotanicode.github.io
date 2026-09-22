@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vite App</title>
+    <link rel="icon" href="/favicon.ico">
+    <title>Michael Kiarie — Software Developer</title>
+    <meta name="description" content="Michael Kiarie is a software developer in Nairobi, Kenya, specialising in Laravel, Spring Boot and Angular — upgrading legacy systems and shipping scalable applications.">
+    <meta name="author" content="Michael Kiarie">
+    <meta name="theme-color" content="#06080f">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Michael Kiarie — Software Developer">
+    <meta property="og:description" content="Backend and full-stack developer specialising in Laravel, Spring Boot and Angular.">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Michael Kiarie — Software Developer">
+    <meta name="twitter:description" content="Backend and full-stack developer specialising in Laravel, Spring Boot and Angular.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+      // Applied before paint so the saved theme never flashes.
+      (function () {
+        try {
+          var stored = localStorage.getItem('portfolio:theme')
+          var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches
+          var theme = stored || (prefersLight ? 'light' : 'dark')
+          document.documentElement.classList.toggle('dark', theme === 'dark')
+          document.documentElement.dataset.theme = theme
+        } catch (e) {
+          document.documentElement.classList.add('dark')
+        }
+      })()
+    </script>
   </head>
   <body>
     <div id="app"></div>

@@ -17,4 +17,9 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  // Pre-bundle the heavy dependencies at server start so Vite never triggers a
+  // mid-session re-optimisation (which forces a full page reload).
+  optimizeDeps: {
+    include: ['vue', 'vue-router', 'pinia', 'gsap', 'gsap/ScrollTrigger', 'lenis', 'three'],
+  },
 })
