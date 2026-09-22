@@ -1,0 +1,5 @@
+# SPA fallback for vue-router history mode.
+# Without this, a hard refresh on /anything returns a 404 from the host.
+# Used by both Netlify and Cloudflare Pages.
+/*    /index.html   200
+

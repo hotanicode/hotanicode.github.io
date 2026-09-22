@@ -4,7 +4,7 @@ import { profile, navLinks, socials, stats } from '../data/profile'
 import { skillGroups, techMarquee } from '../data/skills'
 import { experience, education } from '../data/experience'
 import { projects, projectCategories, featuredProjects } from '../data/projects'
-import { apps, showcasedApps, otherApps, miniBuilds } from '../data/apps'
+import { apps, showcasedApps, otherApps, miniBuilds, repoUrl } from '../data/apps'
 
 describe('profile data', () => {
   it('exposes the core contact details', () => {
@@ -145,5 +145,17 @@ describe('mini builds', () => {
       .forEach((build) => {
         expect(build.repo).toMatch(/^https:\/\/github\.com\/[^/]+\/.+/)
       })
+  })
+
+  it('uses absolute urls for any live demo', () => {
+    miniBuilds
+      .filter((build) => build.demo)
+      .forEach((build) => {
+        expect(build.demo).toMatch(/^https?:\/\//)
+      })
+  })
+
+  it('builds repo urls from the GitHub profile', () => {
+    expect(repoUrl('some-repo')).toMatch(/^https:\/\/github\.com\/[^/]+\/some-repo$/)
   })
 })

@@ -35,7 +35,7 @@ const shots = (...entries) => entries.filter(Boolean)
 const GITHUB_PROFILE =
   socials.find((social) => social.icon === 'github')?.url ?? 'https://github.com'
 
-const repoUrl = (repo) => `${GITHUB_PROFILE.replace(/\/$/, '')}/${repo}`
+export const repoUrl = (repo) => `${GITHUB_PROFILE.replace(/\/$/, '')}/${repo}`
 
 export const apps = [
   {
@@ -120,8 +120,11 @@ export const apps = [
  * Weekend-sized frontend builds — the small challenges I use to keep the
  * fundamentals sharp.
  *
- * NOTE: these repositories are private on GitHub. Make them public, or set
- * `repo: null`, so visitors are not sent to a 404.
+ * These repositories are private, so the cards link to the deployed demo
+ * instead. Paste each URL into `demo` once the build is live (Netlify,
+ * Cloudflare Pages and Vercel all deploy from private repos for free).
+ * If a repo is ever made public, add `repo: repoUrl('<name>')` and the card
+ * will fall back to it when no demo exists.
  */
 export const miniBuilds = [
   {
@@ -130,7 +133,8 @@ export const miniBuilds = [
     blurb: 'Fetches a random piece of advice from an API and handles the loading and error states.',
     date: 'Sep 2023',
     tags: ['JavaScript', 'REST API', 'CSS'],
-    repo: repoUrl('advice-generator'),
+    demo: null,
+    repo: null,
   },
   {
     id: 'calculator',
@@ -138,7 +142,8 @@ export const miniBuilds = [
     blurb: 'A calculator with chained operations, keyboard input and a switchable colour theme.',
     date: 'Aug 2023',
     tags: ['JavaScript', 'CSS Grid'],
-    repo: repoUrl('calculator'),
+    demo: null,
+    repo: null,
   },
   {
     id: 'age-calculator-app',
@@ -146,7 +151,8 @@ export const miniBuilds = [
     blurb: 'Validates a date of birth, then counts the exact years, months and days from it.',
     date: 'Aug 2023',
     tags: ['JavaScript', 'Form validation'],
-    repo: repoUrl('age-calculator-app'),
+    demo: null,
+    repo: null,
   },
 ]
 
