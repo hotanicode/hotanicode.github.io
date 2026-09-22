@@ -90,8 +90,35 @@ test.describe('portfolio', () => {
     await expect(shots.first()).toBeVisible()
 
     // The screenshot must actually decode, not just be present in the DOM.
-    const loaded = await shots.first().evaluate((img) => img.complete && img.naturalWidth > 0)
-    expect(loaded).toBe(true)
+    // Images are lazy-loaded, so poll until the browser has finished with it.
+    await expect
+      .poll(() => shots.first().evaluate((img) => img.complete && img.naturalWidth > 0))
+      .toBe(true)
+  })
+
+  test('defaults to dark even when the OS prefers light', async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'light' })
+    await page.reload()
+
+    await expect(page.locator('html')).toHaveClass(/dark/)
+  })
+
+  test('lists the small frontend builds', async ({ page }) => {
+    await page.locator('#apps').scrollIntoViewIfNeeded()
+
+    const heading = page.getByRole('heading', { name: 'Small builds' })
+    await expect(heading).toBeVisible()
+
+    for (const name of ['Advice Generator', 'Calculator', 'Age Calculator']) {
+      await expect(page.getByRole('heading', { name, exact: true })).toBeVisible()
+    }
+  })
+
+  test('links out to the Canaaneast Group site', async ({ page }) => {
+    await page.locator('#apps').scrollIntoViewIfNeeded()
+
+    await expect(page.getByRole('heading', { name: 'Canaaneast Group' })).toBeVisible()
+    await expect(page.locator('#apps a[href="https://canaangroupco.com/"]')).toHaveCount(1)
   })
 
   test('shows a 404 page for unknown routes', async ({ page }) => {

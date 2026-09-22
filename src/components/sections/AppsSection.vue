@@ -1,7 +1,8 @@
 <script setup>
-import { otherApps, showcasedApps } from '@/data/apps'
+import { miniBuilds, otherApps, showcasedApps } from '@/data/apps'
 import AppShowcase from '@/components/ui/AppShowcase.vue'
 import AppShowcaseCard from '@/components/ui/AppShowcaseCard.vue'
+import MiniBuildCard from '@/components/ui/MiniBuildCard.vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
 </script>
 
@@ -30,6 +31,20 @@ import SectionHeading from '@/components/ui/SectionHeading.vue'
 
       <div v-if="otherApps.length" class="mt-20 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         <AppShowcaseCard v-for="app in otherApps" :key="app.id" :app="app" />
+      </div>
+
+      <!-- Weekend-sized frontend challenges -->
+      <div v-if="miniBuilds.length" class="mt-20">
+        <div data-reveal class="reveal flex flex-wrap items-baseline gap-x-4 gap-y-2">
+          <h3 class="font-display text-xl font-semibold tracking-tight">Small builds</h3>
+          <p class="text-sm text-muted">
+            Weekend frontend challenges I use to keep the fundamentals sharp.
+          </p>
+        </div>
+
+        <div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <MiniBuildCard v-for="build in miniBuilds" :key="build.id" :build="build" />
+        </div>
       </div>
     </div>
   </section>

@@ -8,6 +8,8 @@
  * NOTE: the copy, links and captions here are a starting point — adjust them
  * as each build ships.
  */
+import { socials } from './profile'
+
 const screenshotUrls = import.meta.glob('../assets/images/*.{png,jpg,jpeg,webp}', {
   eager: true,
   query: '?url',
@@ -28,6 +30,12 @@ function screenshot(fileName, caption) {
 
 /** Drops any screenshot whose file is missing so the layout never breaks. */
 const shots = (...entries) => entries.filter(Boolean)
+
+/** Builds a repo URL from the GitHub profile in `profile.js`, so the username lives in one place. */
+const GITHUB_PROFILE =
+  socials.find((social) => social.icon === 'github')?.url ?? 'https://github.com'
+
+const repoUrl = (repo) => `${GITHUB_PROFILE.replace(/\/$/, '')}/${repo}`
 
 export const apps = [
   {
@@ -92,19 +100,53 @@ export const apps = [
     links: { demo: '/', repo: 'https://github.com/michael-hotani/my-portfolio' },
   },
   {
-    id: 'api-toolkit',
-    name: 'API Toolkit',
-    tagline: 'A small Laravel starter for JSON APIs.',
+    id: 'canaaneast-group',
+    name: 'Canaaneast Group',
+    tagline: 'Breaking boundaries — the corporate home of a multi-sector investment group.',
     description:
-      'An opinionated Laravel skeleton with consistent JSON responses, request validation, token auth and a ready-made Docker setup the boilerplate I stopped rewriting for every new service.',
-    platform: 'Backend',
-    status: 'In progress',
+      'A corporate website for Canaaneast Group, a progressive company with diverse interests across multiple sectors. The site presents their investment portfolio and sector expertise, and carries a brand promise built on world-class benchmarks and top-notch quality.',
+    platform: 'Web',
+    status: 'Live',
     year: '2025',
-    tags: ['Laravel', 'PHP', 'Docker', 'REST'],
-    icon: 'terminal',
+    tags: ['Web', 'Corporate site', 'Responsive', 'SEO'],
+    icon: 'layers',
     screenshots: [],
-    image: '/images/apps/api-toolkit.png',
-    links: { demo: null, repo: null },
+    image: '/images/apps/canaangroupco.png',
+    links: { demo: 'https://canaangroupco.com/', repo: null },
+  },
+]
+
+/**
+ * Weekend-sized frontend builds — the small challenges I use to keep the
+ * fundamentals sharp.
+ *
+ * NOTE: these repositories are private on GitHub. Make them public, or set
+ * `repo: null`, so visitors are not sent to a 404.
+ */
+export const miniBuilds = [
+  {
+    id: 'advice-generator',
+    name: 'Advice Generator',
+    blurb: 'Fetches a random piece of advice from an API and handles the loading and error states.',
+    date: 'Sep 2023',
+    tags: ['JavaScript', 'REST API', 'CSS'],
+    repo: repoUrl('advice-generator'),
+  },
+  {
+    id: 'calculator',
+    name: 'Calculator',
+    blurb: 'A calculator with chained operations, keyboard input and a switchable colour theme.',
+    date: 'Aug 2023',
+    tags: ['JavaScript', 'CSS Grid'],
+    repo: repoUrl('calculator'),
+  },
+  {
+    id: 'age-calculator-app',
+    name: 'Age Calculator',
+    blurb: 'Validates a date of birth, then counts the exact years, months and days from it.',
+    date: 'Aug 2023',
+    tags: ['JavaScript', 'Form validation'],
+    repo: repoUrl('age-calculator-app'),
   },
 ]
 

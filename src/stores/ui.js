@@ -1,11 +1,16 @@
 import { computed, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
-import { isBrowser, prefersLightScheme } from '@/composables/useReducedMotion'
+import { isBrowser } from '@/composables/useReducedMotion'
 
 const STORAGE_KEY = 'portfolio:theme'
+const DEFAULT_THEME = 'dark'
 
+/**
+ * Dark is the default on purpose — the system colour scheme is deliberately
+ * ignored. Light mode only applies when the visitor picks it themselves.
+ */
 function readStoredTheme() {
-  if (!isBrowser) return 'dark'
+  if (!isBrowser) return DEFAULT_THEME
 
   try {
     const stored = window.localStorage.getItem(STORAGE_KEY)
@@ -14,7 +19,7 @@ function readStoredTheme() {
     // Storage can be blocked (private mode, strict settings) — fall through.
   }
 
-  return prefersLightScheme() ? 'light' : 'dark'
+  return DEFAULT_THEME
 }
 
 function applyTheme(theme) {

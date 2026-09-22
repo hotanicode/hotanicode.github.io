@@ -4,7 +4,7 @@ import { profile, navLinks, socials, stats } from '../data/profile'
 import { skillGroups, techMarquee } from '../data/skills'
 import { experience, education } from '../data/experience'
 import { projects, projectCategories, featuredProjects } from '../data/projects'
-import { apps, showcasedApps, otherApps } from '../data/apps'
+import { apps, showcasedApps, otherApps, miniBuilds } from '../data/apps'
 
 describe('profile data', () => {
   it('exposes the core contact details', () => {
@@ -107,5 +107,43 @@ describe('apps data', () => {
   it('splits apps into showcased and card variants without losing any', () => {
     expect(showcasedApps.length + otherApps.length).toBe(apps.length)
     expect(otherApps.every((app) => !app.screenshots?.length)).toBe(true)
+  })
+
+  it('links the Canaaneast Group site', () => {
+    const canaan = apps.find((app) => app.id === 'canaaneast-group')
+
+    expect(canaan).toBeDefined()
+    expect(canaan.links.demo).toBe('https://canaangroupco.com/')
+    expect(canaan.status).toBe('Live')
+  })
+
+  it('no longer lists the retired API toolkit', () => {
+    expect(apps.some((app) => app.id === 'api-toolkit')).toBe(false)
+  })
+})
+
+describe('mini builds', () => {
+  it('lists the small frontend challenges with unique ids', () => {
+    const ids = miniBuilds.map((build) => build.id)
+
+    expect(miniBuilds.length).toBeGreaterThanOrEqual(3)
+    expect(new Set(ids).size).toBe(ids.length)
+  })
+
+  it('gives every build a blurb, tags and a date', () => {
+    miniBuilds.forEach((build) => {
+      expect(build.name).toBeTruthy()
+      expect(build.blurb).toBeTruthy()
+      expect(build.tags.length).toBeGreaterThan(0)
+      expect(build.date).toBeTruthy()
+    })
+  })
+
+  it('points each repo link at a GitHub url', () => {
+    miniBuilds
+      .filter((build) => build.repo)
+      .forEach((build) => {
+        expect(build.repo).toMatch(/^https:\/\/github\.com\/[^/]+\/.+/)
+      })
   })
 })

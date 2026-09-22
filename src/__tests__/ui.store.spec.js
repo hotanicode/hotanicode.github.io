@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 
 import { useUiStore } from '../stores/ui'
@@ -8,6 +8,40 @@ describe('ui store', () => {
     setActivePinia(createPinia())
     localStorage.clear()
     document.documentElement.classList.remove('dark')
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  it('defaults to dark', () => {
+    const ui = useUiStore()
+
+    expect(ui.theme).toBe('dark')
+    expect(ui.isDark).toBe(true)
+    expect(document.documentElement.classList.contains('dark')).toBe(true)
+  })
+
+  it('stays dark even when the system asks for a light scheme', () => {
+    // Enforced dark: the OS preference must not override the default.
+    vi.spyOn(window, 'matchMedia').mockImplementation((query) => ({
+      matches: query.includes('prefers-color-scheme: light'),
+      media: query,
+      onchange: null,
+      addListener: () => {},
+      removeListener: () => {},
+      addEventListener: () => {},
+      removeEventListener: () => {},
+      dispatchEvent: () => false,
+    }))
+
+    expect(useUiStore().theme).toBe('dark')
+  })
+
+  it('still honours an explicit light choice from a previous visit', () => {
+    localStorage.setItem('portfolio:theme', 'light')
+
+    expect(useUiStore().theme).toBe('light')
   })
 
   it('toggles between light and dark', () => {

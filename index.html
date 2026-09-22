@@ -19,11 +19,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script>
       // Applied before paint so the saved theme never flashes.
+      // Dark is the default; the system scheme is intentionally ignored.
       (function () {
         try {
           var stored = localStorage.getItem('portfolio:theme')
-          var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches
-          var theme = stored || (prefersLight ? 'light' : 'dark')
+          var theme = stored === 'light' ? 'light' : 'dark'
           document.documentElement.classList.toggle('dark', theme === 'dark')
           document.documentElement.dataset.theme = theme
         } catch (e) {
